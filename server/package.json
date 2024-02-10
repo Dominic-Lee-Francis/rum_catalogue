@@ -2,7 +2,6 @@
   "name": "rum-catalogue",
   "version": "1.0.0",
   "description": "This project will create a way for users to look up different types of rum and subscribe to a newsletter.",
-  "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
