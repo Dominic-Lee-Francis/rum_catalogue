@@ -11,8 +11,12 @@ const controller = require('./controller');
 // create a Router object
 const router = Router();
 
-// this clarifies the getUsers function from the controller file
+// the GET request functions from the controller file
 router.get('/', controller.getUsers);
+router.get('/:username', controller.getUserByUsername);
+
+// the POST request functions from the controller file
+router.post("/", controller.addUser);
 
 // export the router
 module.exports = router;
