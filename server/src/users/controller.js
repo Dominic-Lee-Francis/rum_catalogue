@@ -59,7 +59,8 @@ const addUser = (req, res) => {
         if (error) {
             throw error;
         }
-        pool.query(queries.bcryptUserPassword, [bcrypt.hashSync(password, 10), username], (error, results) => {
+        const hashedPassword = bcrypt.hashSync(password, 10);
+        pool.query(queries.bcryptUserPassword, [hashedPassword, username], (error, results) => {
             if (error) {
                 throw error;
             }
