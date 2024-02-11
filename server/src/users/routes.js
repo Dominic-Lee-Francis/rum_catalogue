@@ -18,5 +18,11 @@ router.get('/:username', controller.getUserByUsername);
 // the POST request functions from the controller file
 router.post("/", controller.addUser);
 
+// the PUT request functions from the controller file
+router.put("/:username", controller.updateUserEmail);
+
+// the DELETE request functions from the controller file
+router.delete("/:username", controller.deleteUser);
+
 // export the router
 module.exports = router;
