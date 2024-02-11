@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 
 // has to after the app.get and this code is to connect to the user database routes file and our user SQL file
 // type this path to see the user database
-app.use('/api/v1/users', userRoutes);
+app.use('/api/users', userRoutes);
 
 // start the server on the specified port
 app.listen(port, () => {

@@ -14,12 +14,14 @@ const router = Router();
 // the GET request functions from the controller file
 router.get('/', controller.getUsers);
 router.get('/:username', controller.getUserByUsername);
+router.get('/users_id/:users_id', controller.getUserByUsers_id);
 
 // the POST request functions from the controller file
 router.post("/", controller.addUser);
 
 // the PUT request functions from the controller file
-router.put("/:username", controller.updateUserEmail);
+router.put("/:username/email", controller.updateUserEmail);
+
 
 // the DELETE request functions from the controller file
 router.delete("/:username", controller.deleteUser);

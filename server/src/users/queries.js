@@ -10,6 +10,8 @@ const getUsers = 'SELECT * FROM users';
 // get a single user from the db
 // $1 is a placeholder for the username it acts like a variable name and should be replaced with the actual value when the query is run
 const getUserByUsername = 'SELECT * FROM users WHERE username = $1';
+const getUserByUsers_id = 'SELECT * FROM users WHERE users_id = $1';
+
 
 // check if username or email exists
 // $1 is a placeholder for the username and the 's' checks the table
@@ -25,11 +27,13 @@ const deleteUser = 'DELETE FROM users WHERE username = $1';
 
 const updateUserEmail = 'UPDATE users SET email = $1 WHERE username = $2';
 
+
 const bcryptUserPassword = 'UPDATE users SET password = $1 WHERE username = $2';
 
 module.exports = {
     getUsers,
     getUserByUsername,
+    getUserByUsers_id,
     checkUsernameExists,
     checkEmailExists,
     addUser,

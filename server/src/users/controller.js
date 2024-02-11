@@ -37,11 +37,21 @@ const getUserByUsername = (req, res) => {
     });
 };
 
+const getUserByUsers_id = (req, res) => {
+    const users_id = req.params.users_id;
+    pool.query(queries.getUserByUsers_id, [users_id], (error, results) => {
+        if (error) {
+            throw error;
+        }
+        res.status(200).json(results.rows);
+    });
+};
+
 const addUser = (req, res) => {
     const { username, email, password, subscription_status, full_name, date_of_birth, district } = req.body;
 
 
-// DONT NEED AS DB ALREADY CHECKS FOR USERNAME AND EMAIL UNIQUE
+// DON'T NEED AS DB ALREADY CHECKS FOR USERNAME AND EMAIL UNIQUE
     //check if username or email exists
     // takes the query from the queries file and checks if the username or email already exists before moving on
     // pool.query(queries.checkUsernameExists, [username], (error, results) => {
@@ -71,7 +81,7 @@ const addUser = (req, res) => {
         res.status(200).send(`You were added successfully! Welcome ${username}!`);
         console.log('User added successfully!');
     });
-    
+// OLD BCRYPT HASHING
     // pool.query(queries.bcryptUserPassword, [bcrypt.hashSync(password, 10), username], (error, results) => {
     //     if (error) {
     //         throw error;
@@ -79,7 +89,6 @@ const addUser = (req, res) => {
     //     // res.status(200).send(`Password has been hashed`);
     //     console.log('Password has been hashed');
     // });
-
 };
 
 const deleteUser = (req, res) => {
@@ -123,6 +132,7 @@ const updateUserEmail = (req, res) => {
 module.exports = {
     getUsers,
     getUserByUsername,
+    getUserByUsers_id,
     addUser,
     deleteUser,
     updateUserEmail,
