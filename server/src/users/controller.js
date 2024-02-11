@@ -66,7 +66,7 @@ const addUser = (req, res) => {
             }
             // had to remove res.status() as it crashed the server
             // res.status(200).send(`Password has been hashed`);
-            console.log('Password has been hashed');
+            // console.log('Password has been hashed');
         });
         res.status(200).send(`You were added successfully! Welcome ${username}!`);
         console.log('User added successfully!');
