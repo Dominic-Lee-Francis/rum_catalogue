@@ -10,11 +10,6 @@ const bcrypt = require('bcrypt');
 // connects to the user database routes file
 const userRoutes = require('./src/users/routes');
 
-
-
-
-
-
 // middleware to post in json format
 app.use(express.json());
 

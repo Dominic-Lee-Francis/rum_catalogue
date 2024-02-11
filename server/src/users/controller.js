@@ -7,6 +7,8 @@
 const pool = require('../../db');
 // imports the SQL queries
 const queries = require('./queries');
+// import bcrypt to hash passwords
+const bcrypt = require('bcrypt');
 
 
 // users function
@@ -38,26 +40,45 @@ const getUserByUsername = (req, res) => {
 const addUser = (req, res) => {
     const { username, email, password, subscription_status, full_name, date_of_birth, district } = req.body;
 
+
+// DONT NEED AS DB ALREADY CHECKS FOR USERNAME AND EMAIL UNIQUE
     //check if username or email exists
     // takes the query from the queries file and checks if the username or email already exists before moving on
-    pool.query(queries.checkUsernameExists, [username], (error, results) => {
-        if (results.rows.length) {
-            res.send('Username already exists');
-        }
-    });
-    pool.query(queries.checkEmailExists, [email], (error, results) => {
-        if (results.rows.length) {
-            res.send('Email already exists');
-        }
-    });
+    // pool.query(queries.checkUsernameExists, [username], (error, results) => {
+    //     if (results.rows.length) {
+    //         // res.send('Username already exists');
+    //     }
+    // });
+    // pool.query(queries.checkEmailExists, [email], (error, results) => {
+    //     if (results.rows.length) {
+    //         // res.send('Email already exists');
+    //     }
+    // });
     // add user to db
     pool.query(queries.addUser, [username, email, password, subscription_status, full_name, date_of_birth, district], (error, results) => {
         if (error) {
             throw error;
         }
-        res.status(201).send(`You were added successfully! Welcome ${username}!`);
+        pool.query(queries.bcryptUserPassword, [bcrypt.hashSync(password, 10), username], (error, results) => {
+            if (error) {
+                throw error;
+            }
+            // had to remove res.status() as it crashed the server
+            // res.status(200).send(`Password has been hashed`);
+            console.log('Password has been hashed');
+        });
+        res.status(200).send(`You were added successfully! Welcome ${username}!`);
         console.log('User added successfully!');
     });
+    
+    // pool.query(queries.bcryptUserPassword, [bcrypt.hashSync(password, 10), username], (error, results) => {
+    //     if (error) {
+    //         throw error;
+    //     }
+    //     // res.status(200).send(`Password has been hashed`);
+    //     console.log('Password has been hashed');
+    // });
+
 };
 
 const deleteUser = (req, res) => {
