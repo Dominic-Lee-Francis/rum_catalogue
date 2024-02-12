@@ -128,6 +128,30 @@ const updateUserEmail = (req, res) => {
     });
 };
 
+const updateUserUsername = (req, res) => {
+    // make sure to write "users_id" and not "user_id" as it will not work
+    // this is because the parameter in the route is "users_id"
+    const users_id = req.params.users_id;
+    // this is the new username that will be updated from the request body
+    const { username } = req.body;
+
+    // this is the query to get the user by the users_id and force an error if the user is not found
+    pool.query(queries.getUserByUsers_id, [users_id], (error, results) => {
+        // !results.rows.length is the same as results.rows.length === 0
+        const noUserFound = !results.rows.length;
+        if (noUserFound) {
+            res.send(`No user found with the users_id: ${users_id}`)
+        }
+        // this is the query to update the username, the first param is the username $1 and the second param is the users_id $2
+        pool.query(queries.updateUserUsername, [username, users_id], (error, results) => {
+            if (error) {
+                throw error;
+            }
+            res.status(200).send(`${users_id}'s username has been updated to: ${username}`);
+        });
+    });
+}
+
 // created module.exports as an object so that we can export multiple functions
 module.exports = {
     getUsers,
@@ -136,4 +160,5 @@ module.exports = {
     addUser,
     deleteUser,
     updateUserEmail,
+    updateUserUsername,
 };

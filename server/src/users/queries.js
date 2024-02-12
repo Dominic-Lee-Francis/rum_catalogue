@@ -26,6 +26,7 @@ const deleteUser = 'DELETE FROM users WHERE username = $1';
 
 
 const updateUserEmail = 'UPDATE users SET email = $1 WHERE username = $2';
+const updateUserUsername = 'UPDATE users SET username = $1 WHERE users_id = $2';
 
 
 const bcryptUserPassword = 'UPDATE users SET password = $1 WHERE username = $2';
@@ -40,4 +41,5 @@ module.exports = {
     deleteUser,
     updateUserEmail,
     bcryptUserPassword,
+    updateUserUsername,
 };
