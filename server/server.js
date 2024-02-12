@@ -1,5 +1,6 @@
 // express package
 const express = require('express');
+const {engine} = require('express-handlebars');
 const app = express();
 // change localhost port here
 const port = process.env.PORT || 8080;
@@ -10,11 +11,23 @@ const bcrypt = require('bcrypt');
 // connects to the user database routes file
 const userRoutes = require('./src/users/routes');
 
+// Engine
+app.engine('hbs', engine({
+    extname: '.hbs',
+    defaultLayout:false,
+    layoutsDir: 'views'
+}));
+
+// set the view engine to handlebars
+app.set('view engine', 'hbs');
+
 // middleware to post in json format
+app.use(express.static('public'));
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+// Router
+app.get('/index', (req, res) => {
+    res.render('index.hbs');
 });
 
 
