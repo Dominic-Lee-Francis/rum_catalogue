@@ -152,6 +152,24 @@ const updateUserUsername = (req, res) => {
     });
 }
 
+const updateUserSubscriptionStatus = (req, res) => {
+    const username = req.params.username;
+    const { subscription_status } = req.body;
+
+    pool.query(queries.getUserByUsername, [username], (error, results) => {
+        const noUserFound = !results.rows.length;
+        if (noUserFound) {
+            res.send(`No user found with the username: ${username}`)
+        }
+
+        pool.query(queries.updateUserSubscriptionStatus, [subscription_status, username], (error, results) => {
+            if (error) {
+                throw error;
+            }
+            res.status(200).send(`${username}'s subscription status has been updated to: ${subscription_status}`);
+        });
+    });
+}
 // created module.exports as an object so that we can export multiple functions
 module.exports = {
     getUsers,
@@ -161,4 +179,5 @@ module.exports = {
     deleteUser,
     updateUserEmail,
     updateUserUsername,
+    updateUserSubscriptionStatus,
 };
