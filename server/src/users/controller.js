@@ -170,6 +170,26 @@ const updateUserSubscriptionStatus = (req, res) => {
         });
     });
 }
+
+const updateUserFullName = (req, res) => {
+    const username = req.params.username;
+    const { full_name } = req.body;
+
+    pool.query(queries.getUserByUsername, [username], (error, results) => {
+        const noUserFound = !results.rows.length;
+        if (noUserFound) {
+            res.send(`No user found with the username: ${username}`)
+        }
+
+        pool.query(queries.updateUserFullName, [full_name, username], (error, results) => {
+            if (error) {
+                throw error;
+            }
+            res.status(200).send(`${username}'s full name has been updated to: ${full_name}`);
+        });
+    });
+}
+
 // created module.exports as an object so that we can export multiple functions
 module.exports = {
     getUsers,
@@ -180,4 +200,5 @@ module.exports = {
     updateUserEmail,
     updateUserUsername,
     updateUserSubscriptionStatus,
+    updateUserFullName,
 };
