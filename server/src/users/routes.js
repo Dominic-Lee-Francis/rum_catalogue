@@ -25,6 +25,7 @@ router.put("/:username/updateEmail", controller.updateUserEmail);
 router.put("/:username/updateSubscriptionStatus", controller.updateUserSubscriptionStatus);
 router.put("/:username/updateFullName", controller.updateUserFullName);
 router.put("/:username/updateDistrict", controller.updateUserDistrict);
+router.put("/:username/updatePassword", controller.updateUserPassword);
 
 // the DELETE request functions from the controller file
 router.delete("/:username", controller.deleteUser);

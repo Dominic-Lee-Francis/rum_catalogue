@@ -220,6 +220,25 @@ const updateUserDistrict = (req, res) => {
     });
 }
 
+const updateUserPassword = (req, res) => {
+    const username = req.params.username;
+    const { password } = req.body;
+
+    pool.query(queries.getUserByUsername, [username], (error, results) => {
+        const noUserFound = !results.rows.length;
+        if (noUserFound) {
+            res.send(`No user found with the username: ${username}`)
+        }
+
+        pool.query(queries.bcryptUserPassword, [bcrypt.hashSync(password, 10), username], (error, results) => {
+            if (error) {
+                throw error;
+            }
+            res.status(200).send(`Password has been updated for ${username}`);
+        });
+    });
+}
+
 // created module.exports as an object so that we can export multiple functions
 module.exports = {
     getUsers,
@@ -232,4 +251,5 @@ module.exports = {
     updateUserSubscriptionStatus,
     updateUserFullName,
     updateUserDistrict,
+    updateUserPassword,
 };

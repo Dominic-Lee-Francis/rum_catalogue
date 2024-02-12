@@ -30,6 +30,7 @@ const updateUserEmail = 'UPDATE users SET email = $1 WHERE username = $2';
 const updateUserSubscriptionStatus = 'UPDATE users SET subscription_status = $1 WHERE username = $2';
 const updateUserFullName = 'UPDATE users SET full_name = $1 WHERE username = $2';
 const updateUserDistrict = 'UPDATE users SET district = $1 WHERE username = $2';
+const updateUserPassword = 'UPDATE users SET password = $1 WHERE username = $2';
 
 // this is a special query to update the password using bcrypt and is used inside the addUser function in the controller
 const bcryptUserPassword = 'UPDATE users SET password = $1 WHERE username = $2';
@@ -48,4 +49,5 @@ module.exports = {
     updateUserSubscriptionStatus,
     updateUserFullName,
     updateUserDistrict,
+    updateUserPassword,
 };
