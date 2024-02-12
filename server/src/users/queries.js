@@ -21,16 +21,17 @@ const checkEmailExists = 'SELECT s FROM users s WHERE s.email = $1';
 // $1, $2, $3, $4, $5, $6, $7 are placeholders for the values that will be added to the database, so username is $1, email is $2, password is $3, etc.
 const addUser = 'INSERT INTO users (username, email, password, subscription_status, full_name, date_of_birth, district) VALUES ($1, $2, $3, $4, $5, $6, $7)';
 
-
+// delete user from the db using their username as the identifier
 const deleteUser = 'DELETE FROM users WHERE username = $1';
 
-
-const updateUserEmail = 'UPDATE users SET email = $1 WHERE username = $2';
+// update user details in the db, all use username as the identifier EXCEPT updating the username which uses users_id
 const updateUserUsername = 'UPDATE users SET username = $1 WHERE users_id = $2';
+const updateUserEmail = 'UPDATE users SET email = $1 WHERE username = $2';
 const updateUserSubscriptionStatus = 'UPDATE users SET subscription_status = $1 WHERE username = $2';
 const updateUserFullName = 'UPDATE users SET full_name = $1 WHERE username = $2';
+const updateUserDistrict = 'UPDATE users SET district = $1 WHERE username = $2';
 
-
+// this is a special query to update the password using bcrypt and is used inside the addUser function in the controller
 const bcryptUserPassword = 'UPDATE users SET password = $1 WHERE username = $2';
 
 module.exports = {
@@ -46,4 +47,5 @@ module.exports = {
     updateUserUsername,
     updateUserSubscriptionStatus,
     updateUserFullName,
+    updateUserDistrict,
 };

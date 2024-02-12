@@ -20,11 +20,11 @@ router.get('/users_id/:users_id', controller.getUserByUsers_id);
 router.post("/", controller.addUser);
 
 // the PUT request functions from the controller file
-router.put("/:username/updateEmail", controller.updateUserEmail);
 router.put("/:users_id/updateUsername", controller.updateUserUsername);
+router.put("/:username/updateEmail", controller.updateUserEmail);
 router.put("/:username/updateSubscriptionStatus", controller.updateUserSubscriptionStatus);
 router.put("/:username/updateFullName", controller.updateUserFullName);
-
+router.put("/:username/updateDistrict", controller.updateUserDistrict);
 
 // the DELETE request functions from the controller file
 router.delete("/:username", controller.deleteUser);

@@ -12,6 +12,7 @@ const bcrypt = require('bcrypt');
 
 
 // users function
+// this function gets all the users from the database
 const getUsers = (req, res) => {
     // the query method has 2 parameters - first is the SQL statement to get in the database,
     // then has an error and results callback
@@ -27,6 +28,7 @@ const getUsers = (req, res) => {
     });
 };
 
+// this function gets a single user from the database by the username
 const getUserByUsername = (req, res) => {
     const username = req.params.username;
     pool.query(queries.getUserByUsername, [username], (error, results) => {
@@ -37,6 +39,7 @@ const getUserByUsername = (req, res) => {
     });
 };
 
+// this function gets a single user from the database by the users_id
 const getUserByUsers_id = (req, res) => {
     const users_id = req.params.users_id;
     pool.query(queries.getUserByUsers_id, [users_id], (error, results) => {
@@ -47,6 +50,8 @@ const getUserByUsers_id = (req, res) => {
     });
 };
 
+// this function adds a user to the database
+// needs work as it can be unstable
 const addUser = (req, res) => {
     const { username, email, password, subscription_status, full_name, date_of_birth, district } = req.body;
 
@@ -91,6 +96,7 @@ const addUser = (req, res) => {
     // });
 };
 
+// this function deletes a user from the database by the username
 const deleteUser = (req, res) => {
     const username = req.params.username;
 
@@ -109,6 +115,7 @@ const deleteUser = (req, res) => {
     });
 };
 
+// this function updates a user's email via username
 const updateUserEmail = (req, res) => {
     const username = req.params.username;
     const { email } = req.body;
@@ -128,6 +135,7 @@ const updateUserEmail = (req, res) => {
     });
 };
 
+// this function updates a user's username via users_id
 const updateUserUsername = (req, res) => {
     // make sure to write "users_id" and not "user_id" as it will not work
     // this is because the parameter in the route is "users_id"
@@ -152,6 +160,7 @@ const updateUserUsername = (req, res) => {
     });
 }
 
+// this function updates a user's subscription status via username
 const updateUserSubscriptionStatus = (req, res) => {
     const username = req.params.username;
     const { subscription_status } = req.body;
@@ -171,6 +180,7 @@ const updateUserSubscriptionStatus = (req, res) => {
     });
 }
 
+// this function updates a user's full name via username
 const updateUserFullName = (req, res) => {
     const username = req.params.username;
     const { full_name } = req.body;
@@ -190,6 +200,26 @@ const updateUserFullName = (req, res) => {
     });
 }
 
+// this function updates a user's district via username
+const updateUserDistrict = (req, res) => {
+    const username = req.params.username;
+    const { district } = req.body;
+
+    pool.query(queries.getUserByUsername, [username], (error, results) => {
+        const noUserFound = !results.rows.length;
+        if (noUserFound) {
+            res.send(`No user found with the username: ${username}`)
+        }
+
+        pool.query(queries.updateUserDistrict, [district, username], (error, results) => {
+            if (error) {
+                throw error;
+            }
+            res.status(200).send(`${username}'s district has been updated to: ${district}`);
+        });
+    });
+}
+
 // created module.exports as an object so that we can export multiple functions
 module.exports = {
     getUsers,
@@ -201,4 +231,5 @@ module.exports = {
     updateUserUsername,
     updateUserSubscriptionStatus,
     updateUserFullName,
+    updateUserDistrict,
 };
