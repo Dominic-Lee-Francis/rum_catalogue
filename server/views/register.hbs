@@ -1,6 +1,6 @@
 <h1>Register</h1>
 
-<form action="../src/users/routes.js" method="POST">
+<form action="/api/users" method="POST">
 <div>
     <div>
         <label for="username">Username</label>
@@ -13,6 +13,10 @@
     <div>
         <label for="password">Password</label>
         <input type="text" id="password" name="password" required>
+    </div>
+    <div>
+        <label for="subscription_status">Subscription Status</label>
+        <input type="text" id="subscription_status" name="subscription_status" required>
     </div>
     <div>
         <label for="full_name">Full Name</label>
