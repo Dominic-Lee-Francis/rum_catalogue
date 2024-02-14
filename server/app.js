@@ -16,6 +16,7 @@ const app = express();
 const userRoutes = require('./src/users/routes');
 
 // PARSE APPLICATION
+app.use(express.urlencoded({extended:false}));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
@@ -33,8 +34,16 @@ app.set('view engine', 'hbs');
 
 // ROUTER
 app.get('/', (req, res) => {
-    res.render('home')
-})
+    res.render('home.hbs')
+});
+
+app.get('/login.hbs', (req, res) => {
+    res.render('login.hbs')
+});
+
+app.get('/register.hbs', (req, res) => {
+    res.render('register.hbs')
+});
 
 // DB URL PATH
 // has to after the app.get and this code is to connect to the user database routes file and our user SQL file
