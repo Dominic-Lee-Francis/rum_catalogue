@@ -37,11 +37,11 @@ app.get('/', (req, res) => {
     res.render('home.hbs')
 });
 
-app.get('/login.hbs', (req, res) => {
+app.get('/login', (req, res) => {
     res.render('login.hbs')
 });
 
-app.get('/register.hbs', (req, res) => {
+app.get('/register', (req, res) => {
     res.render('register.hbs')
 });
 
